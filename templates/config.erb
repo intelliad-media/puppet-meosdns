@@ -11,7 +11,7 @@
   "ttl": <%=@ttl%>,
   "domain": "<%=@domain%>",
   "port": <%=@port%>,
-  "resolvers": <%=@resolvers%>,
+  "resolvers": <%=@resolvers.inspect%>,
   "timeout": <%=@timeout%>,
   "listener": "<%=@listener%>",
   "dnson": <%=@dns_on%>,
@@ -26,5 +26,5 @@
   "SOAMinttl": <%=@soa_minttl%>,
   "recurseon": <%=@recurse_on%>,
   "enforceRFC952": <%=@enforce_rfc952%>,
-  "IPSources": <%=@ip_sources%>
+  "IPSources": <%=@ip_sources.inspect%>
 }
