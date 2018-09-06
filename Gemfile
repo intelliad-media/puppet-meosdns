@@ -8,9 +8,9 @@ if RUBY_VERSION < '2.0'
   # json_pure 2.0.2 requires ruby 2.0, and 2.0.1 requires ruby 1.9. Lock to 1.8.3.
   gem 'json_pure', '= 1.8.3'
 end
-gem 'metadata-json-lint'
+gem 'metadata-json-lint', '= 1.0.0'
 gem 'puppet', puppetversion
-gem 'puppet-lint', '>= 2.0.0'
+gem 'puppet-lint', '= 2.1.0'
 gem 'puppetlabs_spec_helper', '>= 0.8.2'
 gem 'rspec-puppet'
 # group :acceptance do
