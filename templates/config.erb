@@ -6,12 +6,23 @@
 <%- unless @mesos_master.nil?  -%>
   "masters": <%=@mesos_master%>,
 <%- end -%>
+<%- unless @mesos_authentication.nil?  -%>
+  "mesosAuthentication": "<%=@mesos_authentication%>",
+<%- end -%>
+<%- unless @mesos_credentials_principal.nil?   -%>
+  <%- unless @mesos_credentials_secret.nil?   -%>
+  "mesosCredentials": {
+    "principal": "<%=@mesos_credentials_principal%>",
+    "secret": "<%=@mesos_credentials_secret%>"
+  },
+  <%- end -%>
+<%- end -%>
   "refreshSeconds": <%=@refresh_seconds%>,
   "stateTimeoutSeconds": <%=@state_timeout_seconds%>,
   "ttl": <%=@ttl%>,
   "domain": "<%=@domain%>",
   "port": <%=@port%>,
-  "resolvers": <%=@resolvers.inspect%>,
+  "resolvers": <%=@resolvers%>,
   "timeout": <%=@timeout%>,
   "listener": "<%=@listener%>",
   "dnson": <%=@dns_on%>,
@@ -26,5 +37,5 @@
   "SOAMinttl": <%=@soa_minttl%>,
   "recurseon": <%=@recurse_on%>,
   "enforceRFC952": <%=@enforce_rfc952%>,
-  "IPSources": <%=@ip_sources.inspect%>
+  "IPSources": <%=@ip_sources%>
 }

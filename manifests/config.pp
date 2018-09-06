@@ -15,6 +15,8 @@
 #
 # Manage mesosdns config
 #
+# See also https://github.com/mesosphere/mesos-dns/blob/master/docs/docs/configuration-parameters.md
+#
 class mesosdns::config (
   $ensure,
   $config,
@@ -43,6 +45,9 @@ class mesosdns::config (
   $ip_sources,
   $mesos_zk = undef,
   $mesos_master = undef,
+  $mesos_authentication = undef,
+  $mesos_credentials_principal = undef,
+  $mesos_credentials_secret = undef,
 ) {
 
   if $ensure == 'present' {
@@ -55,6 +60,15 @@ class mesosdns::config (
     }
     if $mesos_zk != undef {
       validate_string($mesos_zk)
+    }
+    if $mesos_authentication != undef {
+      validate_re($mesos_authentication, ['^basic$', '^iam$'], "Invalid parameter mesos_authentication '${mesos_authentication}'")
+    }
+    if $mesos_credentials_principal != undef {
+      validate_string($mesos_credentials_principal)
+    }
+    if $mesos_credentials_secret != undef {
+      validate_string($mesos_credentials_secret)
     }
 
     # required, just validate the first entry
