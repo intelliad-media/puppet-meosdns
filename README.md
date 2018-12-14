@@ -87,11 +87,15 @@ For further details have a look on [Mesos-DNS configuration documentation](http:
 - `ip_sources` -> `IPSources` - Array of Strings
 
 ## Requirements
- * Puppet > 3.0 and < 5.0
+ * Puppet >= 4.6 and < 6.0
 
 ## Dependencies
 * [stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib) version `>= 4.10.0` - we need fact `service_provider` and some validiation functions
 * [archive](https://github.com/puppetlabs/puppet-archive)  version `>= 0.4.0` - is required to download binary
+
+## Issues
+* The builds on Puppet 5.2 fail due to some incompatibility with stdlib and its IP type:
+       Syntax error at ']' at /home/travis/build/intelliad-media/puppet-mesosdns/spec/fixtures/modules/stdlib/types/ip/address.pp:4:1
 
 ## Limitations
 This module should work out of the box with all Linux systems which has service provider `upstart` or `systemd` (detected by stdlib facter)
