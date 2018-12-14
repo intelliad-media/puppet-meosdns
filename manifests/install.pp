@@ -19,20 +19,16 @@ class mesosdns::install (
   $ensure,
   $version,
   $source,
-  $path,
+  $install_path,
+  $version_path,
+  $version_file,
+  $path_binary,
 ) {
   # inject version to template
   $_source = inline_template($source)
 
-  # create temp file to trigger new download
-  $version_hash = md5($_source)
-  $version_path = "${path}/version/"
-  $version_file = "${version_path}${version_hash}"
-
-  $path_binary =  "${path}/mesos-dns"
-
   if $ensure == 'present' {
-    file { $path:
+    file { $install_path:
       ensure => directory,
       owner  => 'root',
       group  => 'root',
@@ -61,7 +57,6 @@ class mesosdns::install (
       ensure  => link,
       target  => $version_file,
       require => Archive[$version_file],
-      notify  => Service['mesos-dns'],
     }
     ->
     file { $version_file:
@@ -70,10 +65,16 @@ class mesosdns::install (
       group   => 'root',
       mode    => '0755',
       require => Archive[$version_file],
-      notify  => Service['mesos-dns'],
     }
+  # Else ensure it is absent
   } else {
-    file { $path:
+    file { $version_file:
+      ensure => absent,
+      purge  => true,
+      force  => true,
+    }
+    ->
+    file { $install_path:
       ensure  => absent,
       purge   => true,
       recurse => true,

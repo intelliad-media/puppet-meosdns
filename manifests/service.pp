@@ -18,6 +18,7 @@
 class mesosdns::service (
   $binary,
   $config,
+  $version_file,
   $ensure       = present,
   $status       = enabled,
   $restart      = true,
@@ -112,6 +113,7 @@ class mesosdns::service (
     hasrestart => true,
     hasstatus  => true,
     provider   => $provider,
-    before     => $service_before
+    before     => $service_before,
+    subscribe  => [File[$config], File[$version_file]],
   }
 }

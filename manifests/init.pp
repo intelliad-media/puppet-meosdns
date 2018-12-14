@@ -58,16 +58,22 @@ class mesosdns (
   $ip_sources = ['netinfo', 'mesos', 'host'],
 ) inherits mesosdns::params {
 
-  validate_re($ensure, ['^present$', '^absent$'], "Invalid parameter ensure '${ensure}'")
+  unless $ensure =~ '^present$' or $ensure =~ '^absent$' { fail "Invalid parameter ensure ${ensure}" }
 
   $file_binary = "${install_path}/mesos-dns"
   $file_config = "${config_path}/config.json"
+  $version_path = "${install_path}/version/"
+  $version_file = "${version_path}${version}"
+  $path_binary =  "${install_path}/mesos-dns"
 
   class {'mesosdns::install':
-    ensure  => $ensure,
-    version => $version,
-    source  => $source,
-    path    => $install_path,
+    ensure       => $ensure,
+    version      => $version,
+    source       => $source,
+    install_path => $install_path,
+    version_path => $version_path,
+    version_file => $version_file,
+    path_binary  => $path_binary,
   }
 
   class {'mesosdns::config':
@@ -104,13 +110,14 @@ class mesosdns (
   }
 
   class { 'mesosdns::service':
-    ensure   => $ensure,
-    binary   => $file_binary,
-    config   => $file_config,
-    status   => $service_status,
-    restart  => $service_restart,
-    provider => $service_provider,
-    require  => Class['mesosdns::install', 'mesosdns::config']
+    ensure       => $ensure,
+    binary       => $file_binary,
+    config       => $file_config,
+    status       => $service_status,
+    restart      => $service_restart,
+    provider     => $service_provider,
+    version_file => $version_file,
+    require      => Class['mesosdns::install', 'mesosdns::config']
   }
 
 }
